@@ -25,6 +25,8 @@
 						<th>Name</th>
 						<th>Email</th>
 						<th>Téléphone</th>
+						<th>Détails</th>
+						<th>Supprimer</th>
 					</tr>
 
 					<tr th:each="c : ${tabview}">
@@ -32,7 +34,8 @@
 						<td th:text="${c.nom}"></td>
 						<td th:text="${c.email}"></td>
 						<td th:text="${c.telephone}"></td>
-
+						<td><a th:href="@{/show/{idC}(idC=${c.id})}" class="btn btn-primary">Show</a></td>
+						<td><a th:href="@{/delete/{idC}(idC=${c.id})}" class="btn btn-danger">Delete</a></td>
 					</tr>
 				</table>
 			</div>
