@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<meta charset="UTF-8">
+	<title>Spring Boot</title>
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" th:href="@{css/main.css}" />
+
+</header>
+
+<body>
+
+
+	<h3 align="center">Ajouter un Nouveau Candidat</h3>
+
+
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col col-lg-6">
+				<form   method="post"  th:action="@{/add}">
+
+					<div class="form-group">
+						<label for="id">ID:</label>
+						<input type="number" class="form-control" name="id" id="id">
+					</div>
+					<div class="form-group">
+						<label for="nom">Nom:</label>
+						<input type="text" class="form-control" name="nom" id="nom">
+					</div>
+					<div class="form-group">
+						<label for="email">Email address:</label>
+						<input type="email" class="form-control" name="email" id="email">
+					</div>
+					<div class="form-group">
+						<label for="tel">Telephone:</label>
+						<input type="text" class="form-control" name="tel" id="tel">
+					</div>
+
+					<button type="submit" class="btn btn-success" style="margin-top:20px">Ajouter</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

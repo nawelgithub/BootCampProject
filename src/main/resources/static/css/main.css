@@ -1,6 +1,9 @@
 h3{
-	color:blue;
+	color:rgb(0, 64, 0);
 }
 h4{
 	color:rgb(64, 0, 128);
+}
+body{
+	padding:20px
 }
