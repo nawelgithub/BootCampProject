@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<header>
+	<meta charset="UTF-8">
+	<title>Spring Boot</title>
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+	
+
+</header>
+
+<body>
+
+
+	<table class="table table-striped" align="center" border="2">
+		<caption align="center"> Liste des Candidats</caption>
+		<tr>
+
+			<th>ID</th>
+			<th>Name</th>
+			<th>Email</th>
+			<th>Téléphone</th>
+		</tr>
+
+		<tr th:each="c : ${tabview}">
+			<td th:text="${c.id}"></td>
+			<td th:text="${c.nom}"></td>
+			<td th:text="${c.email}"></td>
+			<td th:text="${c.telephone}"></td>
+
+		</tr>
+	</table>
+
+</body>
+
+</html>
