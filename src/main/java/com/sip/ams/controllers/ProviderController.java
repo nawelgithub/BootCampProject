@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+//import org.springframework.web.bind.annotation.ResponseBody;
 import com.sip.ams.entities.Provider;
 import com.sip.ams.repositories.ProviderRepository;
 import java.util.List;
@@ -25,19 +25,21 @@ public class ProviderController {
 	}
 
 	@GetMapping("list")
-    //@ResponseBody
+	// @ResponseBody
 	public String listProviders(Model model) {
 
-		//model.addAttribute("providers", providerRepository.findAll());
-		//si la base de donnee est vide, dans ce cas le retour de cette instruction est le vide 
-		//or on a besoin de null pour afficher No Providers yet! donc il faut utiliser une list
-        
-		List<Provider> lp =(List<Provider>)providerRepository.findAll();
-		if(lp.size()==0)
-		lp = null;
-		model.addAttribute("providers",lp);//l'envoi de la liste
-		
-		//return "Nombre de fournisseur = " + lp.size();
+		// model.addAttribute("providers", providerRepository.findAll());
+		// si la base de donnee est vide, dans ce cas le retour de cette instruction est
+		// le vide
+		// or on a besoin de null pour afficher No Providers yet! donc il faut utiliser
+		// une list
+
+		List<Provider> lp = (List<Provider>) providerRepository.findAll();
+		if (lp.size() == 0)
+			lp = null;
+		model.addAttribute("providers", lp);// l'envoi de la liste
+
+		// return "Nombre de fournisseur = " + lp.size();
 		return "provider/listProvider";
 	}
 
@@ -58,9 +60,7 @@ public class ProviderController {
 	}
 
 	@GetMapping("delete/{id}")
-	public String deleteProvider(@PathVariable("id") long id, Model model) {
-
-//long id2 = 100L;
+	public String deleteProvider(@PathVariable("id") long id) {
 
 		Provider provider = providerRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalidprovider Id:" + id));
@@ -69,10 +69,6 @@ public class ProviderController {
 
 		providerRepository.delete(provider);
 
-		/*
-		 * model.addAttribute("providers", providerRepository.findAll()); return
-		 * "provider/listProviders";
-		 */
 		return "redirect:../list";
 	}
 
@@ -87,7 +83,11 @@ public class ProviderController {
 	}
 
 	@PostMapping("update")
-	public String updateProvider(@Valid Provider provider, BindingResult result, Model model) {
+	public String updateProvider(@Valid Provider provider, BindingResult result) {
+
+		if (result.hasErrors()) {
+			return "redirect:list";
+		}
 
 		providerRepository.save(provider);
 		return "redirect:list";
