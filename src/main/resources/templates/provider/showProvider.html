@@ -14,16 +14,13 @@
 
 <body>
 	<div class="container my-5">
-		<h3> Update Provider</h3>
+		<h3>Update Provider</h3>
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-8">
-					<form action="#" th:action="@{/provider/update/{id}(id=${provider.id})}" th:object="${provider}" method="post"
-					enctype="multipart/form-data">
-
-						<input type="hidden" th:field="*{id}" />
+					<form action="#" th:action="@{/provider/update/{id}(id=${provider.id})}" th:object="${provider}"
+						method="post" enctype="multipart/form-data">
 						<div class="row">
-
 							<div class="form-group col-md-6">
 								<label for="name" class="col-formlabel">Name</label>
 								<input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Name">
@@ -31,7 +28,7 @@
 									class="text-danger"></span>
 							</div>
 							<div class="form-group col-md-8">
-								<label for="email" class="col-formlabel">Email</label>
+								<label for="email" class="col-form-label">Email</label>
 								<input type="text" th:field="*{email}" class="form-control" id="email"
 									placeholder="Email">
 								<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
@@ -44,8 +41,7 @@
 								<span th:if="${#fields.hasErrors('address')}" th:errors="address"
 									class="text-danger"></span>
 							</div>
-
-
+							
 							<div class="form-group col-md-8">
 								<label for="oldlogo" class="col-form-label">Old Logo</label>
 								<img title="provider" alt="ImageProvider" th:src="@{'/images/providers/'+ ${provider.logo}}" width="50"
@@ -55,16 +51,45 @@
 								<label for="newlogo" class="col-form-label">New Logo</label>
 								<input class="form-control" type="file" id="newlogo" name="files" multiple>
 							</div>
-
-							<div class="form-group col-md-8">
-								<input type="submit" class="btn btn-primary" value="Update Provider"
-									style="margin-top:20px">
+							
+							<div class="container my-2">
+								<div class="card">
+									<div class="card-body">
+										<div th:switch="${articles}" class="container my-5">
+											<p class="my-5"> <i class="fas fa-user-plus ml-2"> List of Articles</i>
+											</p>
+											<div class="col-md10">
+												<h2 th:case="null">No Articles yet!</h2>
+												<th:case="*">
+													<table class="table table-striped table-responsive-md">
+														<thead>
+															<tr>
+																<th>Label</th>
+																<th>Price</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr th:each="article : ${articles}">
+																<td th:text="${article.label}"></td>
+																<td th:text="${article.price}"></td>
+															</tr>
+														</tbody>
+													</table>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</form>
+						<div class="form-group col-md-8">
+							<input type="submit" class="btn btn-primary" value="Update Provider">
+						</div>
 				</div>
+
+				</form>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 
