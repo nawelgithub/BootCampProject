@@ -28,7 +28,7 @@ import com.sip.ams.repositories.ProviderRepository;
 @RequestMapping("/article/")
 public class ArticleController {
 
-	public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
+	public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/images/articles";
 
 	private final ArticleRepository articleRepository;
 	private final ProviderRepository providerRepository;

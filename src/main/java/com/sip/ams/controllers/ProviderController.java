@@ -8,15 +8,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 //import org.springframework.web.bind.annotation.ResponseBody;
 import com.sip.ams.entities.Provider;
 import com.sip.ams.repositories.ProviderRepository;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/provider/")
 public class ProviderController {
+	
+	public static String providerDirectory = System.getProperty("user.dir") + "/src/main/resources/static/images/providers";
+	
+	
 	private final ProviderRepository providerRepository;
 
 	@Autowired
@@ -51,10 +63,22 @@ public class ProviderController {
 	}
 
 	@PostMapping("add")
-	public String addProvider(@Valid Provider provider, BindingResult result) {
+	public String addProvider(@Valid Provider provider, BindingResult result, @RequestParam("files") MultipartFile[] files) {
 		if (result.hasErrors()) {
 			return "provider/addProvider";
 		}
+		// upload image
+		StringBuilder fileName = new StringBuilder();
+		MultipartFile file = files[0];
+		Path fileNameAndPath = Paths.get(providerDirectory, file.getOriginalFilename());
+		fileName.append(file.getOriginalFilename());
+		try {
+			Files.write(fileNameAndPath, file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		provider.setLogo(fileName.toString());
+		// fin upload image
 		providerRepository.save(provider);
 		return "redirect:list";
 	}
@@ -83,11 +107,24 @@ public class ProviderController {
 	}
 
 	@PostMapping("update")
-	public String updateProvider(@Valid Provider provider, BindingResult result) {
+	public String updateProvider(@Valid Provider provider, BindingResult result, @RequestParam("files") MultipartFile[] files) {
 
 		if (result.hasErrors()) {
 			return "redirect:list";
 		}
+		
+		// upload image
+		StringBuilder fileName = new StringBuilder();
+		MultipartFile file = files[0];
+		Path fileNameAndPath = Paths.get(providerDirectory, file.getOriginalFilename());
+		fileName.append(file.getOriginalFilename());
+		try {
+			Files.write(fileNameAndPath, file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		provider.setLogo(fileName.toString());
+		// fin upload image
 
 		providerRepository.save(provider);
 		return "redirect:list";

@@ -27,6 +27,7 @@
 							<table class="table table-striped table-responsivemd">
 								<thead>
 									<tr>
+									<th>Logo</th>
 										<th>Name</th>
 										<th>Email</th>
 										<th>Address</th>
@@ -36,6 +37,7 @@
 								</thead>
 								<tbody>
 									<tr th:each="provider : ${providers}">
+									<td><img alt="ImageProvider" th:src="@{'/images/providers/'+ ${provider.logo}}" width="50" height="50" /></td>
 										<td th:text="${provider.name}"></td>
 										<td th:text="${provider.email}"></td>
 										<td th:text="${provider.address}"></td>
