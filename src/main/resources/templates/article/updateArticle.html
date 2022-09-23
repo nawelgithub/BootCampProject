@@ -19,7 +19,7 @@
 			<div class="card-body">
 				<div class="col-md-8">
 					<form action="#" th:action="@{/article/edit/{id}(id=${article.id})}" th:object="${article}"
-						method="post">
+						method="post"  enctype="multipart/form-data">
 						<div class="row">
 							<div class="form-group col-md-6">
 								<label for="label" class="col-form-label">Label</label> 
@@ -39,6 +39,17 @@
 									<option th:each="pr: ${providers}" th:value="${pr.id}" th:text="${pr.name}"
 										th:selected="(${pr.id} == ${idProvider})" />
 								</select>
+								
+								
+									<div class="form-group col-md-8">
+								<label for="oldlogo" class="col-form-label">Old Picture</label>
+								<img title="article" alt="ImageArticle" th:src="@{'/images/articles/'+ ${article.picture}}" width="50"
+									height="50" style="margin-top:20px"/>
+							</div>
+							<div class="form-group col-md-8">
+								<label for="newpicture" class="col-form-label">New Picture</label>
+								<input class="form-control" type="file" id="newpicture" name="files" multiple>
+							</div>
 							</div>
 							<div class="form-group col-md-8">
 								<input type="submit" class="btn btn-primary" value="Update Article" style="margin-top:20px">

@@ -28,7 +28,8 @@ import com.sip.ams.repositories.ProviderRepository;
 @RequestMapping("/article/")
 public class ArticleController {
 
-	public static String uploadDirectory = System.getProperty("user.dir") + "/src/main/resources/static/images/articles";
+	public static String uploadDirectory = System.getProperty("user.dir")
+			+ "/src/main/resources/static/images/articles";
 
 	private final ArticleRepository articleRepository;
 	private final ProviderRepository providerRepository;
@@ -110,7 +111,7 @@ public class ArticleController {
 
 	@PostMapping("edit/{id}")
 	public String updateArticle(@PathVariable("id") long id, @Valid Article article, BindingResult result, Model model,
-			@RequestParam(name = "providerId", required = false) Long p) {
+			@RequestParam(name = "providerId", required = false) Long p, @RequestParam("files") MultipartFile[] files) {
 		if (result.hasErrors()) {
 			article.setId(id);
 			return "article/updateArticle";
@@ -119,6 +120,18 @@ public class ArticleController {
 		Provider provider = providerRepository.findById(p)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid provider Id:" + p));
 		article.setProvider(provider);
+		// upload image
+		StringBuilder fileName = new StringBuilder();
+		MultipartFile file = files[0];
+		Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
+		fileName.append(file.getOriginalFilename());
+		try {
+			Files.write(fileNameAndPath, file.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		article.setPicture(fileName.toString());
+		// fin upload image
 
 		articleRepository.save(article);
 		model.addAttribute("articles", articleRepository.findAll());
