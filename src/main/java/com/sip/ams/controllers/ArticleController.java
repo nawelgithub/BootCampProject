@@ -6,9 +6,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+//import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -41,13 +43,18 @@ public class ArticleController {
 	}
 
 	@GetMapping("list")
-	public String listProviders(Model model) {
+	public String listProviders(Model model, @RequestParam(name="page",defaultValue="0") int page, 
+			@RequestParam(name="size", defaultValue="3") int size,
+			@RequestParam(name="keyword",defaultValue="")String mc) {
 
-		List<Article> la = (List<Article>) articleRepository.findAll();
-		if (la.size() == 0)
+		Page<Article> la = articleRepository.findByLabelContains(mc, PageRequest.of(page, size));
+		if (la.getSize() == 0)
 			la = null;
 
-		model.addAttribute("articles", la);
+		model.addAttribute("articles", la.getContent());
+		model.addAttribute("pages",new int[la.getTotalPages()]);
+		model.addAttribute("currentPage",page);
+		model.addAttribute("keyword",mc);
 		return "article/listArticles";
 	}
 

@@ -1,6 +1,8 @@
 package com.sip.ams.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +41,9 @@ public class ProviderController {
 
 	@GetMapping("list")
 	// @ResponseBody
-	public String listProviders(Model model) {
+	public String listProviders(Model model, @RequestParam(name="page",defaultValue="0") int page, 
+			@RequestParam(name="size", defaultValue="3") int size,
+			@RequestParam(name="keyword",defaultValue="")String mc) {
 
 		// model.addAttribute("providers", providerRepository.findAll());
 		// si la base de donnee est vide, dans ce cas le retour de cette instruction est
@@ -47,10 +51,18 @@ public class ProviderController {
 		// or on a besoin de null pour afficher No Providers yet! donc il faut utiliser
 		// une list
 
-		List<Provider> lp = (List<Provider>) providerRepository.findAll();
-		if (lp.size() == 0)
+		//List<Provider> lp = (List<Provider>) providerRepository.findAll();
+		
+		Page<Provider> lp = providerRepository.findByNameContains(mc, PageRequest.of(page, size));
+		
+		//if (lp.size() == 0)
+		if (lp.getSize() == 0)
 			lp = null;
-		model.addAttribute("providers", lp);// l'envoi de la liste
+		model.addAttribute("providers", lp.getContent());// l'envoi de la liste 
+		model.addAttribute("pages",new int[lp.getTotalPages()]);
+		model.addAttribute("currentPage",page);
+		model.addAttribute("keyword",mc);
+		
 
 		// return "Nombre de fournisseur = " + lp.size();
 		return "provider/listProvider";
