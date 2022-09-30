@@ -72,6 +72,7 @@ public class ArticleController {
 
 		if (result.hasErrors()) {
 			return "redirect:list";
+			//return "article/addArticle";
 		}
 
 		Provider provider = providerRepository.findById(p)

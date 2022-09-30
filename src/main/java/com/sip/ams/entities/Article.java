@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -20,7 +22,6 @@ public class Article {
 	@NotBlank(message = "Label is mandatory")
 	@Column(name = "label")
 	private String label;
-
 	@Column(name = "price")
 	private float price;
 
