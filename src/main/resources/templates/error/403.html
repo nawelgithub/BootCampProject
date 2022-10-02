@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="template1">
+
+<head>
+	<meta charset="utf-8">
+	<title>ERROR</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-
+5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+</head>
+
+<body>
+	<div layout:fragment="pageContent">
+	
+	
+ <h3 class="text-danger" align="center"> You don't have permission to visit the page
+	<br /> return to home page
+	<a th:href="@{/index}">here</a>
+ </h3>
+	
+	</div>
+
+
+</body>
+
+</html>

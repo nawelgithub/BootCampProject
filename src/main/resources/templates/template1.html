@@ -17,25 +17,25 @@
 		<!-- Brand -->
 		<ul class="navbar-nav">
 			<li class="nav-item">
-			<img title="logo" alt="logo" th:src="@{'/images/ams.png'}"  width="30" height="30" />
-		</li>
-		
+				<img title="logo" alt="logo" th:src="@{'/images/ams.png'}" width="40" height="40" />
+			</li>
 
 
-		<!-- Links -->
-		
+
+			<!-- Links -->
+
 			<li class="nav-item">
 				<a class="nav-link" href="#">Home</a>
-			
 
 
-			<!-- Dropdown -->
+
+				<!-- Dropdown -->
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 					Provider
 				</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" th:href="@{/provider/add}">Ajouter</a>
+					<a class="dropdown-item" th:href="@{/provider/add}" sec:authorize="hasRole('ROLE_ADMIN')">Ajouter</a>
 					<a class="dropdown-item" th:href="@{/provider/list}">List</a>
 				</div>
 			</li>
@@ -48,12 +48,26 @@
 					Article
 				</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" th:href="@{/article/add}">Ajouter</a>
+					<a class="dropdown-item" th:href="@{/article/add}" sec:authorize="hasRole('ROLE_ADMIN')">Ajouter</a>
 					<a class="dropdown-item" th:href="@{/article/list}">List</a>
 				</div>
 			</li>
-		</ul>
 
+
+
+			<!-- Dropdown -->
+			<li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+				<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+					Role
+				</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" th:href="@{/role/add}">Ajouter</a>
+					<a class="dropdown-item" th:href="@{/role/list}">List</a>
+				</div>
+			</li>
+
+			<a class="nav-link" th:href="@{/accounts/list}"  sec:authorize="hasRole('ROLE_ADMIN')">Users</a>
+		</ul>
 
 
 		<ul class="navbar-nav ml-auto">
@@ -70,8 +84,8 @@
 				</a>
 				<div class="dropdown-menu">
 					<a sec:authorize="isAnonymous()" class="dropdown-item" th:href="@{login}">Login</a>
-					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{logout}">Logout</a>
-					<a class="dropdown-item" href="#">Profile</a>
+					<a sec:authorize="isAuthenticated()" class="dropdown-item" th:href="@{/logout}">Logout</a>
+
 				</div>
 			</li>
 		</ul>
