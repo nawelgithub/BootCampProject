@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/registration").permitAll(); // accès pour tous users
 		http.authorizeRequests().antMatchers("/provider/list", "/provider/show**/**","/article/list", "/article/show**/**")
 		.hasAnyRole("USER","ADMIN");
-		http.authorizeRequests().antMatchers("/provider/**", "/article/**", "/role/**", "/accounts/**")
+		http.authorizeRequests().antMatchers("/provider/**", "/article/**", "/accounts/**")
 				.hasRole("ADMIN");
 	
 		http.authorizeRequests().anyRequest().authenticated().and().csrf().disable().formLogin() // l'accès de fait via un formulaire
